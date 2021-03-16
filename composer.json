@@ -10,5 +10,11 @@
         }
     ],
     "minimum-stability": "beta",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ramdandev04/minimvc.git"
+        }
+    ]
 }
