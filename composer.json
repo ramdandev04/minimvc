@@ -1,20 +1,14 @@
 {
     "name": "ramdan/minimvc",
-    "description": "Simple mvc framework",
+    "description": "Lightweight mvc framework",
     "type": "project",
     "license": "MIT",
     "authors": [
         {
-            "name": "Ade muhamad ramdani",
+            "name": "Ramdani",
             "email": "ramdan.dev04@gmail.com"
         }
     ],
-    "minimum-stability": "beta",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/ramdandev04/minimvc.git"
-        }
-    ]
+    "minimum-stability": "dev",
+    "require": {}
 }
