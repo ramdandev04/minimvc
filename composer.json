@@ -10,5 +10,8 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "symfony/console": "5.x-dev",
+        "filp/whoops": "^2.9"
+    }
 }
