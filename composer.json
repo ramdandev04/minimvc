@@ -9,6 +9,6 @@
             "email": "ramdan.dev04@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "beta",
     "prefer-stable": true
 }
