@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * 
  * mini mvc framework untuk mempermudah pembuatan aplikasi berbasis web

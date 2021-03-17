@@ -23,6 +23,8 @@
 
      "DB" => [
 
+        "DB" => "mysql",
+
 
          "HOST" => "localhost", // silahkan sesuaikan dengan kebutuhan
 
@@ -30,7 +32,7 @@
          "USER" => "root", // Username dari database kalian
 
 
-         "PASS" => "root" // untuk password database
+         "PASS" => "root!" // untuk password database
 
 
      ]

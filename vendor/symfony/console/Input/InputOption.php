@@ -25,6 +25,7 @@ class InputOption
     public const VALUE_REQUIRED = 2;
     public const VALUE_OPTIONAL = 4;
     public const VALUE_IS_ARRAY = 8;
+    public const VALUE_NEGATABLE = 16;
 
     private $name;
     private $shortcut;
@@ -33,11 +34,11 @@ class InputOption
     private $description;
 
     /**
-     * @param string                        $name        The option name
-     * @param string|array|null             $shortcut    The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
-     * @param int|null                      $mode        The option mode: One of the VALUE_* constants
-     * @param string                        $description A description text
-     * @param string|string[]|int|bool|null $default     The default value (must be null for self::VALUE_NONE)
+     * @param string                    $name        The option name
+     * @param string|array|null         $shortcut    The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
+     * @param int|null                  $mode        The option mode: One of the VALUE_* constants
+     * @param string                    $description A description text
+     * @param string|string[]|bool|null $default     The default value (must be null for self::VALUE_NONE)
      *
      * @throws InvalidArgumentException If option mode is invalid or incompatible
      */
@@ -70,7 +71,7 @@ class InputOption
 
         if (null === $mode) {
             $mode = self::VALUE_NONE;
-        } elseif ($mode > 15 || $mode < 1) {
+        } elseif ($mode >= (self::VALUE_NEGATABLE << 1) || $mode < 1) {
             throw new InvalidArgumentException(sprintf('Option mode "%s" is not valid.', $mode));
         }
 
@@ -81,6 +82,9 @@ class InputOption
 
         if ($this->isArray() && !$this->acceptValue()) {
             throw new InvalidArgumentException('Impossible to have an option mode VALUE_IS_ARRAY if the option does not accept a value.');
+        }
+        if ($this->isNegatable() && $this->acceptValue()) {
+            throw new InvalidArgumentException('Impossible to have an option mode VALUE_NEGATABLE if the option also accepts a value.');
         }
 
         $this->setDefault($default);
@@ -146,10 +150,15 @@ class InputOption
         return self::VALUE_IS_ARRAY === (self::VALUE_IS_ARRAY & $this->mode);
     }
 
+    public function isNegatable(): bool
+    {
+        return self::VALUE_NEGATABLE === (self::VALUE_NEGATABLE & $this->mode);
+    }
+
     /**
      * Sets the default value.
      *
-     * @param string|string[]|int|bool|null $default The default value
+     * @param string|string[]|bool|null $default The default value
      *
      * @throws LogicException When incorrect default value is given
      */
@@ -157,6 +166,9 @@ class InputOption
     {
         if (self::VALUE_NONE === (self::VALUE_NONE & $this->mode) && null !== $default) {
             throw new LogicException('Cannot set a default value when using InputOption::VALUE_NONE mode.');
+        }
+        if (self::VALUE_NEGATABLE === (self::VALUE_NEGATABLE & $this->mode) && null !== $default) {
+            throw new LogicException('Cannot set a default value when using InputOption::VALUE_NEGATABLE mode.');
         }
 
         if ($this->isArray()) {
@@ -173,7 +185,7 @@ class InputOption
     /**
      * Returns the default value.
      *
-     * @return string|string[]|int|bool|null The default value
+     * @return string|string[]|bool|null The default value
      */
     public function getDefault()
     {
@@ -200,6 +212,7 @@ class InputOption
         return $option->getName() === $this->getName()
             && $option->getShortcut() === $this->getShortcut()
             && $option->getDefault() === $this->getDefault()
+            && $option->isNegatable() === $this->isNegatable()
             && $option->isArray() === $this->isArray()
             && $option->isValueRequired() === $this->isValueRequired()
             && $option->isValueOptional() === $this->isValueOptional()

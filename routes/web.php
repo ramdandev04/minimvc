@@ -10,3 +10,15 @@ use CORE\Route as Route;
  */
 
  Route::get('/', 'Home/index');
+
+
+ Route::get('/crud', 'Crud/index');
+
+
+ Route::post('/crud', 'Crud/addData');
+
+
+ Route::post('/crud/update', 'Crud/updateData');
+
+
+ Route::post('/crud/delete', 'Crud/deleteData');

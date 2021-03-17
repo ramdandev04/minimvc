@@ -3,12 +3,14 @@
 require __DIR__.'/vendor/autoload.php';
 require __DIR__.'/libs/Minimvc.php';
 
-use Ramdan\Minimvc;
+use Ramdan\Serve;
+use Ramdan\Webset;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
 
 # add our commands
-$application->add(new Minimvc());
+$application->add(new Serve());
+$application->add(new Webset());
 
 $application->run();

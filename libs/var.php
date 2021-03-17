@@ -14,7 +14,10 @@ define('METHOD', $_SERVER['REQUEST_METHOD']); //mengambil request method
 
 
 
-$modules = [$_ENV['BASE_DIR'].'/routes/web']; //modul yang akan di load di dalam init
+$modules = [
+    $_ENV['BASE_DIR'].'/models/core.mod',
+    $_ENV['BASE_DIR'].'/routes/web'
+]; //modul yang akan di load di dalam init
 
 
 
